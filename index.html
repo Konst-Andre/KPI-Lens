@@ -55,19 +55,18 @@ button{font-family:inherit;border:none;cursor:pointer}
 .avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
 .sr-nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chev-ico{color:var(--muted);flex-shrink:0}
-.icon-btn{width:34px;height:34px;background:transparent;color:var(--ink-2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .12s}
-.icon-btn:active{background:var(--bg-soft)}
+.icon-btn{width:36px;height:36px;background:var(--bg-soft);border:1px solid var(--border);color:var(--ink-2);border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .12s}
+.icon-btn:active{background:var(--border)}
 .timestamp{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex-shrink:0}
 
 /* ════ FILTER BAR ════ */
 .filter-bar{display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:relative;z-index:19}
 .filter-bar::-webkit-scrollbar{display:none}
-.fp{display:flex;align-items:center;gap:4px;padding:5px 10px;border:1px solid var(--border);border-radius:20px;background:var(--bg-soft);color:var(--ink-2);font-size:12px;font-weight:600;white-space:nowrap;transition:all .12s;flex-shrink:0;position:relative}
+.fp{display:flex;align-items:center;gap:4px;padding:10px 16px;border:1px solid var(--border);border-radius:20px;background:var(--bg-soft);color:var(--ink-2);font-size:12px;font-weight:600;white-space:nowrap;transition:all .12s;flex-shrink:0;position:relative}
 .fp.ds-active{border-color:currentColor}
 .fp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .fp-chev{font-size:9px;opacity:.5;margin-left:1px}
-.filter-icon-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:8px;background:var(--bg-soft);color:var(--ink-2);flex-shrink:0}
 
 /* ════ DROPDOWN (fixed position) ════ */
 .fp-dd{position:fixed;background:var(--card);border:1px solid var(--border-2);border-radius:var(--rs);box-shadow:var(--sh2);z-index:100;min-width:150px;overflow:hidden}
@@ -128,17 +127,28 @@ button{font-family:inherit;border:none;cursor:pointer}
 .ph-actions{display:flex;gap:6px;margin-bottom:10px}
 .ph-btn{display:flex;align-items:center;gap:5px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--rxs);background:var(--bg-soft);color:var(--ink-2);font-size:12px;font-weight:600;transition:background .12s}
 .ph-btn:active{background:var(--border)}
-.ph-table-wrap{overflow-x:auto;scrollbar-width:thin;margin-bottom:8px;border-radius:var(--rs);border:1px solid var(--border)}
-.ph-table{width:100%;border-collapse:collapse;font-size:12px}
-.ph-table thead th{padding:7px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;background:var(--card-2);text-align:right}
-.ph-table thead th:nth-child(1),.ph-table thead th:nth-child(2),.ph-table thead th:nth-child(3),.ph-table thead th:nth-child(4){text-align:left}
-.ph-table tbody td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle;text-align:right;white-space:nowrap}
-.ph-table tbody tr:last-child td{border-bottom:none}
-.ph-table tbody td:nth-child(1){color:var(--muted);font-weight:700;text-align:left;width:22px}
-.ph-table tbody td:nth-child(2){font-weight:600;text-align:left;color:var(--ink)}
-.ph-table tbody td:nth-child(3){text-align:left;color:var(--muted);max-width:90px;overflow:hidden;text-overflow:ellipsis}
-.ph-table tbody td:nth-child(4){text-align:left;color:var(--muted-2)}
-.ph-val{font-size:13px;font-weight:700;color:var(--accent)}
+/* ── pharmacy cards (variant D) ── */
+
+.ph-card-d{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh1);cursor:pointer;transition:border-color .12s,background .12s}
+.ph-card-d:active{border-color:var(--border-2);background:var(--card-2)}
+.ph-card-d.selected{border-color:var(--accent);background:var(--bg-soft)}
+/* ── pharmacy banner (P9B) ── */
+#ph-banner{display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--bg-soft);border-bottom:1px solid var(--border);border-left:3px solid var(--accent);flex-shrink:0}
+.ph-banner-ico{color:var(--accent);flex-shrink:0;display:flex;align-items:center}
+.ph-banner-body{flex:1;min-width:0}
+.ph-banner-addr{font-size:12px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph-banner-meta{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:1px}
+.ph-banner-x{flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--border);color:var(--ink-2);font-size:14px;line-height:1;cursor:pointer;border:none}
+.ph-card-info{flex:1;min-width:0}
+.ph-card-addr{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;word-break:break-word}
+.ph-card-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.ph-card-kpi{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.ph-kpi-main{display:flex;align-items:baseline;gap:5px}
+.ph-kpi-val{font-size:14px;font-weight:700;color:var(--accent)}
+.ph-share-row{display:flex;align-items:center;gap:5px;justify-content:flex-end}
+.ph-share-num{font-size:11px;color:var(--muted);white-space:nowrap}
+.ph-bar-wrap{width:48px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.ph-bar{height:100%;border-radius:2px;background:var(--muted-2);transition:width .2s}
 .pager{display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 0 4px}
 .pg-btn{min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--bg-soft);color:var(--ink-2);font-size:12px;font-weight:600}
 .pg-btn.act{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -223,6 +233,9 @@ button{font-family:inherit;border:none;cursor:pointer}
     <span class="ctx-count" id="ctxCnt">Аптек: 245</span>
   </div>
 
+  <!-- ─── PHARMACY BANNER (P9B) ─── -->
+  <div id="ph-banner" style="display:none"></div>
+
   <!-- ─── MAIN CONTENT ─── -->
   <main class="tab-content" id="tabContent">
     <div class="tab-pane active" id="tab-overview"></div>
@@ -302,20 +315,62 @@ const DATA = {
 
   pharmacies: {
     'PSR Константінов Андрій': [
-      {nm:'ЛІНДА-ФАРМ АО',       addr:'вул.Батумська, 13Д',       city:'Дніпро',    val:1200,prev:651, sh:2.4},
-      {nm:'TRADITIONAL TRADE',   addr:'вул.Соборна, 45',           city:'Київ',      val:980, prev:582, sh:2.0},
-      {nm:'АПТЕКА 911',          addr:'просп.Перемоги, 23',        city:'Київ',      val:766, prev:791, sh:1.6},
-      {nm:'АНЦ',                 addr:'вул.Велика Діївська, 36',   city:'Дніпро',    val:703, prev:609, sh:1.4},
-      {nm:'ПОДОРОЖНИК',          addr:'вул.Калинова, 115',         city:'Дніпро',    val:612, prev:501, sh:1.3},
-      {nm:'АПТЕКА НИЗЬКИХ ЦІН',  addr:'вул.Семафорна, 30А',        city:'Дніпро',    val:588, prev:434, sh:1.2},
-      {nm:'АПТЕКА ОПТОВИХ ЦІН',  addr:"просп.Відродження, 3",      city:"Кам'янське",val:544, prev:493, sh:1.1},
-      {nm:'МЕД-СЕРВІС',          addr:'вул.Калинова, 115',         city:'Дніпро',    val:521, prev:531, sh:1.1},
-      {nm:'ФАРМАРКЕТ',           addr:'бул.Слави, 3Р',             city:'Дніпро',    val:498, prev:462, sh:1.0},
-      {nm:'АПТЕКА ДОБРОГО ДНЯ',  addr:'вул.Велика Діївська, 36',   city:'Дніпро',    val:476, prev:393, sh:1.0},
+      {nm:'ЛІНДА-ФАРМ АО',       addr:'вул. Батумська, 13Д',         city:'Дніпро',   cat_split:[63,25],
+        off_grn:{val:1200,prev:651}, ims_grn:{val:1020,prev:554},
+        sku_off_prev:{val:33,prev:28}, sku_off_curr:{val:48,prev:33},
+        ims_sku_prev:{val:28,prev:24}, ims_sku_curr:{val:41,prev:28}},
+      {nm:'TRADITIONAL TRADE',   addr:'вул. Соборна, 45',             city:'Київ',     cat_split:[58,30],
+        off_grn:{val:980,prev:582},  ims_grn:{val:833,prev:494},
+        sku_off_prev:{val:27,prev:23}, sku_off_curr:{val:39,prev:27},
+        ims_sku_prev:{val:23,prev:19}, ims_sku_curr:{val:33,prev:23}},
+      {nm:'АПТЕКА 911',          addr:'просп. Перемоги, 23',          city:'Київ',     cat_split:[70,22],
+        off_grn:{val:766,prev:791},  ims_grn:{val:651,prev:672},
+        sku_off_prev:{val:35,prev:30}, sku_off_curr:{val:31,prev:35},
+        ims_sku_prev:{val:30,prev:25}, ims_sku_curr:{val:26,prev:30}},
+      {nm:'АНЦ',                 addr:'вул. Велика Діївська, 36',     city:'Дніпро',   cat_split:[65,25],
+        off_grn:{val:703,prev:609},  ims_grn:{val:598,prev:518},
+        sku_off_prev:{val:24,prev:20}, sku_off_curr:{val:28,prev:24},
+        ims_sku_prev:{val:21,prev:17}, ims_sku_curr:{val:24,prev:21}},
+      {nm:'ПОДОРОЖНИК',          addr:'вул. Калинова, 115',           city:'Дніпро',   cat_split:[62,27],
+        off_grn:{val:612,prev:501},  ims_grn:{val:520,prev:426},
+        sku_off_prev:{val:20,prev:17}, sku_off_curr:{val:24,prev:20},
+        ims_sku_prev:{val:17,prev:14}, ims_sku_curr:{val:20,prev:17}},
+      {nm:'АПТЕКА НИЗЬКИХ ЦІН',  addr:'вул. Семафорна, 30А',          city:'Дніпро',   cat_split:[68,24],
+        off_grn:{val:588,prev:434},  ims_grn:{val:500,prev:369},
+        sku_off_prev:{val:17,prev:14}, sku_off_curr:{val:23,prev:17},
+        ims_sku_prev:{val:15,prev:12}, ims_sku_curr:{val:20,prev:15}},
+      {nm:'АПТЕКА ОПТОВИХ ЦІН',  addr:"просп. Відродження, 3",        city:"Кам'янське",cat_split:[60,30],
+        off_grn:{val:544,prev:493},  ims_grn:{val:462,prev:419},
+        sku_off_prev:{val:20,prev:17}, sku_off_curr:{val:22,prev:20},
+        ims_sku_prev:{val:17,prev:14}, ims_sku_curr:{val:19,prev:17}},
+      {nm:'МЕД-СЕРВІС',          addr:'вул. Калинова, 115',           city:'Дніпро',   cat_split:[55,33],
+        off_grn:{val:521,prev:531},  ims_grn:{val:443,prev:451},
+        sku_off_prev:{val:22,prev:18}, sku_off_curr:{val:21,prev:22},
+        ims_sku_prev:{val:19,prev:16}, ims_sku_curr:{val:18,prev:19}},
+      {nm:'ФАРМАРКЕТ',           addr:'бул. Слави, 3Р',               city:'Дніпро',   cat_split:[66,24],
+        off_grn:{val:498,prev:462},  ims_grn:{val:423,prev:393},
+        sku_off_prev:{val:18,prev:15}, sku_off_curr:{val:20,prev:18},
+        ims_sku_prev:{val:16,prev:13}, ims_sku_curr:{val:17,prev:16}},
+      {nm:'АПТЕКА ДОБРОГО ДНЯ',  addr:'вул. Велика Діївська, 36',     city:'Дніпро',   cat_split:[72,20],
+        off_grn:{val:476,prev:393},  ims_grn:{val:405,prev:334},
+        sku_off_prev:{val:16,prev:13}, sku_off_curr:{val:19,prev:16},
+        ims_sku_prev:{val:14,prev:11}, ims_sku_curr:{val:16,prev:14}},
     ]
   },
 
-  sku_off: [
+  // Offtake SKU Попередній — попередній місячний фокус (Нурофен/Контекс/Дюрекс центричний)
+  sku_off_prev: [
+    {nm:"Нурофен Форте 200мг 12 шт",           m:[1842,1764,2079,1984,2483]},
+    {nm:"Нурофен 200мг 8 шт",                  m:[1120,1152,1289,1218,1534]},
+    {nm:"Контекс Плюс №12",                    m:[887,912,1021,978,1189]},
+    {nm:"Дюрекс Feel Thin №12",                m:[778,812,892,851,1024]},
+    {nm:"Гавіскон Подвійної Дії таб.№24",      m:[645,698,782,741,912]},
+    {nm:"Гавіскон Форте м'ята сусп.150 мл",    m:[512,548,624,594,734]},
+    {nm:"Evitest One тест на вагітність",       m:[421,445,502,478,589]},
+    {nm:"Стрепсілс Класік 24 шт",              m:[378,398,451,428,521]},
+  ],
+  // Offtake SKU Поточний — поточний місячний фокус (Гавіскон/Стрепсілс центричний)
+  sku_off_curr: [
     {nm:"Гавіскон Подвійної Дії таб.№24",      m:[2058,1982,2341,2280,2976]},
     {nm:"Гавіскон Подвійної Дії сусп.150 мл",  m:[1254,1335,1528,1482,1764]},
     {nm:"Гавіскон №24, таб.250 мг",            m:[1036,1091,1245,1187,1490]},
@@ -332,7 +387,17 @@ const DATA = {
     {nm:"Evitest One тест на вагітність",       m:[198,215,224,208,276]},
     {nm:"Гавіскон Міні Анісовий №24",          m:[178,192,205,198,241]},
   ],
-  sku_ims: [
+  // IMS SKU Попередній
+  sku_ims_prev: [
+    {nm:"Нурофен Форте 200мг 12 шт",           m:[1648,1579,1861,1778,2223]},
+    {nm:"Нурофен 200мг 8 шт",                  m:[1004,1031,1155,1092,1374]},
+    {nm:"Контекс Плюс №12",                    m:[795,818,915,877,1066]},
+    {nm:"Дюрекс Feel Thin №12",                m:[698,729,800,764,918]},
+    {nm:"Гавіскон Подвійної Дії таб.№24",      m:[578,626,702,665,818]},
+    {nm:"Гавіскон Форте м'ята сусп.150 мл",    m:[459,492,560,533,658]},
+  ],
+  // IMS SKU Поточний
+  sku_ims_curr: [
     {nm:"Гавіскон Подвійної Дії таб.№24",      m:[1842,1788,2107,2052,2683]},
     {nm:"Гавіскон Подвійної Дії сусп.150 мл",  m:[1128,1201,1375,1334,1587]},
     {nm:"Гавіскон №24, таб.250 мг",            m:[932,981,1120,1068,1341]},
@@ -358,21 +423,24 @@ const S = {
   mode:   'value',     // value | trend
   city:   'all',
   tab:    'overview',
+  pharmacy: null,   // null = territory mode | addr string = selected outlet
 };
 
 const DS_LIST = [
-  {id:'off_grn', lbl:'Offtake ГРН', color:'var(--off)'},
-  {id:'ims_grn', lbl:'IMS ГРН',     color:'var(--ims)'},
-  {id:'sku_off', lbl:'Offtake SKU · УП', color:'var(--sku-o)'},
-  {id:'sku_ims', lbl:'IMS SKU · УП',    color:'var(--sku-i)'},
+  {id:'off_grn',      lbl:'Offtake ГРН',    color:'var(--off)'},
+  {id:'ims_grn',      lbl:'IMS ГРН',        color:'var(--ims)'},
+  {id:'sku_off_prev', lbl:'Offtake SKU Мин',color:'var(--sku-o)'},
+  {id:'sku_off_curr', lbl:'Offtake SKU Пот',color:'var(--sku-o)'},
+  {id:'ims_sku_prev', lbl:'IMS SKU Мин',    color:'var(--sku-i)'},
+  {id:'ims_sku_curr', lbl:'IMS SKU Пот',    color:'var(--sku-i)'},
 ];
 const CAT_LIST = [
   {id:'all', lbl:'Всі категорії'},
   {id:'otc', lbl:'OTC'},{id:'iw', lbl:'IW'},{id:'test', lbl:'TEST'},
 ];
 const PER_LIST = ['Січ \'26','Лют \'26','Бер \'26','Кві \'26','Тра \'26'];
-const AGG_LIST  = [{id:'monthly',lbl:'Monthly'},{id:'ytd',lbl:'YTD'}];
-const MODE_LIST = [{id:'value',lbl:'Value'},{id:'trend',lbl:'Trend'}];
+const AGG_LIST  = [{id:'monthly',lbl:'Monthly'},{id:'mom',lbl:'MoM'},{id:'ytd',lbl:'YTD'}];
+const MODE_LIST = [{id:'value',lbl:'Value'},{id:'qty',lbl:'Qty'},{id:'pct',lbl:'%'}];
 
 // ═══════════════════════════════════════════
 //  HELPERS
@@ -386,6 +454,40 @@ function fmtU(v) { // units
   if(v>=1000) return (v/1000).toFixed(1)+'\u202FK';
   return v.toLocaleString('uk');
 }
+// Global Metric → pharmacy KPI (Phase 8 mapping)
+function getPhKPI(o){
+  const map={
+    off_grn:'off_grn', ims_grn:'ims_grn',
+    sku_off_prev:'sku_off_prev', sku_off_curr:'sku_off_curr',
+    ims_sku_prev:'ims_sku_prev', ims_sku_curr:'ims_sku_curr',
+  };
+  const key=map[S.ds]||'off_grn';
+  const d=o[key]||o.off_grn||{val:0,prev:0};
+  const isGrn=S.ds==='off_grn'||S.ds==='ims_grn';
+  return {val:d.val,prev:d.prev,unit:isGrn?'грн':'уп',fmt:isGrn?fmtK:fmtU};
+}
+// Global Metric → SKU dataset key (Phase 8 mapping)
+function getSKUDataset(){
+  const map={
+    off_grn:'sku_off_curr', ims_grn:'sku_ims_curr',
+    sku_off_prev:'sku_off_prev', sku_off_curr:'sku_off_curr',
+    ims_sku_prev:'sku_ims_prev', ims_sku_curr:'sku_ims_curr',
+  };
+  return map[S.ds]||'sku_off_curr';
+}
+// SKU dataset key → display label
+const SKU_DS_LABELS={
+  sku_off_prev:'Offtake SKU Мин · УП', sku_off_curr:'Offtake SKU Пот · УП',
+  sku_ims_prev:'IMS SKU Мин · УП',     sku_ims_curr:'IMS SKU Пот · УП',
+};
+const SKU_DS_COLORS={
+  sku_off_prev:'var(--sku-o)', sku_off_curr:'var(--sku-o)',
+  sku_ims_prev:'var(--sku-i)', sku_ims_curr:'var(--sku-i)',
+};
+const SKU_DS_HEX={
+  sku_off_prev:'#e59247', sku_off_curr:'#e59247',
+  sku_ims_prev:'#6fa0e0', sku_ims_curr:'#6fa0e0',
+};
 function dp(c,p){ if(!p) return null; return (c-p)/p*100; }
 function rDelta(c,p){
   const d=dp(c,p);
@@ -418,9 +520,44 @@ function spark(vals,color,w=58,h=20){
 }
 function sumArr(arr,to){ return (arr||[]).slice(0,to+1).reduce((a,b)=>a+b,0); }
 
-function getSum(){
+// ─── pharmacy-level category sum (P5 data layer) ───
+// Derives OTC/IW/TEST breakdown from territory shape × pharmacy grn share × cat_split
+function getPharmacySum(ph){
+  const pfx=(S.ds==='ims_grn'||S.ds==='ims_sku_prev'||S.ds==='ims_sku_curr')?'ims':'off';
   const d=DATA.sr[S.sr]||{};
-  const pfx=S.ds==='ims_grn'||S.ds==='sku_ims'?'ims':'off';
+  const ytd=S.agg==='ytd';
+  const tOtc=d[pfx+'_otc']||[], tIw=d[pfx+'_iw']||[], tTst=d[pfx+'_test']||[];
+  // territory total per period
+  const tTot=tOtc.map((v,i)=>v+tIw[i]+tTst[i]);
+  // pharmacy's grn share at current period (anchors the absolute level)
+  const kpi=ph[pfx+'_grn']||{val:0,prev:0};
+  const base=tTot[S.per]||1;
+  const scale=kpi.val/base;
+  // category split: [otcPct, iwPct], testPct = remainder
+  const [op,ip]=ph.cat_split||[62,26];
+  const tp=100-op-ip;
+  // derive monthly arrays: territory shape × scale × category %
+  const phOtc=tTot.map(v=>Math.round(v*scale*op/100));
+  const phIw =tTot.map(v=>Math.round(v*scale*ip/100));
+  const phTst=tTot.map(v=>Math.round(v*scale*tp/100));
+  const p=S.per;
+  const val=(arr,i)=>ytd?sumArr(arr,i):(arr[i]||0);
+  return {
+    otc:{c:val(phOtc,p), p:p>0?val(phOtc,p-1):null},
+    iw: {c:val(phIw, p), p:p>0?val(phIw, p-1) :null},
+    tst:{c:val(phTst,p), p:p>0?val(phTst,p-1):null},
+    monthly:{otc:phOtc, iw:phIw, tst:phTst},
+  };
+}
+
+function getSum(){
+  // P5: if pharmacy selected → return pharmacy-level data
+  if(S.pharmacy){
+    const ph=(DATA.pharmacies[S.sr]||[]).find(p=>phKey(p)===S.pharmacy);
+    if(ph) return getPharmacySum(ph);
+  }
+  const d=DATA.sr[S.sr]||{};
+  const pfx=(S.ds==='ims_grn'||S.ds==='ims_sku_prev'||S.ds==='ims_sku_curr')?'ims':'off';
   const ytd=S.agg==='ytd';
   const val=(key,i)=>ytd?sumArr(d[key],i):(d[key]||[])[i]||0;
   const p=S.per;
@@ -496,15 +633,6 @@ function renderFilterBar(){
     ${mkPill('fpAgg','',false,agg.lbl)}
     ${mkPill('fpMd','',false,md.lbl)}
     ${mkPill('fpCity','',false,'Київ')}
-    <button class="filter-icon-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/>
-        <circle cx="12" cy="4" r="2"/><line x1="21" y1="12" x2="12" y2="12"/>
-        <line x1="8" y1="12" x2="3" y2="12"/><circle cx="10" cy="12" r="2"/>
-        <line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/>
-        <circle cx="14" cy="20" r="2"/>
-      </svg>
-    </button>
   `;
 
   mkDd('fpDs', DS_LIST, 'ds', d=>d.lbl,
@@ -562,17 +690,22 @@ function renderOverview(){
 
   const trendHTML=mkTrendChart(sm.monthly,per);
 
-  const outs=(DATA.pharmacies[S.sr]||[]).slice(0,5);
+  const outs=(DATA.pharmacies[S.sr]||[])
+    .map(o=>({...o,...getPhKPI(o)}))
+    .sort((a,b)=>b.val-a.val)
+    .slice(0,5);
+  const dsLblShort=(DS_LIST.find(d=>d.id===S.ds)?.lbl)||'';
   const topHTML=outs.map((o,i)=>{
     const sv=[o.prev*.65,o.prev*.78,o.prev*.88,o.prev,o.val];
-    return `<div class="tt-item">
+    const esc=phKey(o).replace(/'/g,"\\'");
+    return `<div class="tt-item" onclick="selectPharmacy('${esc}')" style="cursor:pointer${S.pharmacy===phKey(o)?';border-color:var(--accent);background:var(--bg-soft)':''}">
       <div class="tt-rank${i===0?' r1':''}">${i+1}</div>
       <div class="tt-info">
         <div class="tt-name">${o.nm}</div>
         <div class="tt-addr">${o.addr}, ${o.city}</div>
       </div>
       <div class="tt-kpi">
-        <div class="tt-val">${fmtU(o.val)}</div>
+        <div class="tt-val">${o.fmt(o.val)}</div>
         ${rDelta(o.val,o.prev)}
       </div>
       <div style="margin-left:4px">${spark(sv,'#e59247',44,16)}</div>
@@ -583,7 +716,7 @@ function renderOverview(){
     <div class="sec-t" style="margin-top:2px">ОГЛЯД KPI</div>
     <div class="hero-row">${heroHTML}</div>
     ${trendHTML}
-    <div class="sec-t">ТОП АПТЕК (${per})</div>
+    <div class="sec-t">ТОП АПТЕК (${dsLblShort} · ${per})</div>
     ${topHTML}
     <div style="height:16px"></div>
   `;
@@ -641,8 +774,9 @@ function mkTrendChart(mon,per){
   }).join('');
 
   const dsLbl=(DS_LIST.find(d=>d.id===S.ds)?.lbl||'').toUpperCase();
+  const phCtx=S.pharmacy?(()=>{const o=(DATA.pharmacies[S.sr]||[]).find(p=>phKey(p)===S.pharmacy);return o?' · '+o.addr:''})():'';
   return `<div class="trend-card">
-    <div class="sec-t" style="margin-bottom:8px">ТРЕНД ЗА ${n} МІС. (${dsLbl})</div>
+    <div class="sec-t" style="margin-bottom:8px">ТРЕНД ЗА ${n} МІС. (${dsLbl}${phCtx})</div>
     <svg width="100%" viewBox="0 0 ${W} ${H}" overflow="visible" style="display:block">
       ${grid}${cline}${linesHTML}${xLbls}${leg}
     </svg>
@@ -653,19 +787,37 @@ function mkTrendChart(mon,per){
 //  PHARMACIES TAB
 // ═══════════════════════════════════════════
 function renderPharmacies(){
-  const outs=DATA.pharmacies[S.sr]||[];
-  const dsLbl=(DS_LIST.find(d=>d.id===S.ds)?.lbl)||'Offtake ГРН';
+  const raw=DATA.pharmacies[S.sr]||[];
+  const outs=raw.map(o=>({...o,...getPhKPI(o)})).sort((a,b)=>b.val-a.val);
   const prevPer=S.per>0?PER_LIST[S.per-1]:null;
+  const dsLbl=(DS_LIST.find(d=>d.id===S.ds)?.lbl)||'Offtake ГРН';
+  const total=outs.reduce((s,o)=>s+o.val,0);
+  const maxVal=outs.length?outs[0].val:1;
 
-  const rows=outs.map((o,i)=>`<tr>
-    <td>${i+1}</td>
-    <td class="ph-name">${o.nm}</td>
-    <td>${o.addr}</td>
-    <td>${o.city}</td>
-    <td class="ph-val">${fmtU(o.val)}</td>
-    <td>${prevPer?rDelta(o.val,o.prev):'—'}</td>
-    <td style="color:var(--muted)">${o.sh}%</td>
-  </tr>`).join('');
+  const cards=outs.map((o,i)=>{
+    const share=total>0?(o.val/total*100).toFixed(1):'0.0';
+    const barW=Math.round(o.val/maxVal*100);
+    const esc=phKey(o).replace(/'/g,"\\'");
+    return `<div class="ph-card-d${S.pharmacy===phKey(o)?' selected':''}" onclick="selectPharmacy('${esc}')">
+      <div class="tt-rank${i===0?' r1':''}">${i+1}</div>
+      <div class="ph-card-info">
+        <div class="ph-card-addr">${o.addr}</div>
+        <div class="ph-card-meta">${o.nm} · ${o.city}</div>
+      </div>
+      <div class="ph-card-kpi">
+        <div class="ph-kpi-main">
+          <span class="ph-kpi-val">${o.fmt(o.val)}</span>
+          <span style="font-size:11px;color:var(--muted)">${o.unit}</span>
+          <span style="color:var(--muted);font-size:11px">·</span>
+          ${prevPer?rDelta(o.val,o.prev):'—'}
+        </div>
+        <div class="ph-share-row">
+          <span class="ph-share-num">${share}% тер.</span>
+          <div class="ph-bar-wrap"><div class="ph-bar" style="width:${barW}%"></div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 
   document.getElementById('tab-pharmacies').innerHTML=`
     <div style="margin-top:2px">
@@ -683,16 +835,9 @@ function renderPharmacies(){
           Групи
         </button>
       </div>
-      <div class="ph-table-wrap">
-        <table class="ph-table">
-          <thead><tr>
-            <th>#</th><th>Аптека</th><th>Адреса</th><th>Місто</th>
-            <th>${dsLbl} ↕</th>
-            <th>${prevPer?`vs ${prevPer} ↕`:'Δ'}</th>
-            <th>Частка ↕</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
+
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+        ${cards}
       </div>
       <div class="pager">
         <button class="pg-btn act">1</button>
@@ -711,11 +856,24 @@ function renderPharmacies(){
 //  SKU TAB
 // ═══════════════════════════════════════════
 function renderSKU(){
-  const isOff=S.ds!=='sku_ims'&&S.ds!=='ims_grn';
-  const list=isOff?DATA.sku_off:DATA.sku_ims;
-  const sc=isOff?'#e59247':'#6fa0e0';
-  const dsLbl=isOff?'Offtake SKU · УП':'IMS SKU · УП';
-  const dsColor=isOff?'var(--sku-o)':'var(--sku-i)';
+  const dsKey=getSKUDataset();
+  let list=DATA[dsKey]||DATA.sku_off_curr;
+
+  // P5 data layer: scale SKU values by pharmacy's share when pharmacy is selected
+  if(S.pharmacy){
+    const ph=(DATA.pharmacies[S.sr]||[]).find(p=>phKey(p)===S.pharmacy);
+    if(ph){
+      const pfx=(S.ds==='ims_grn'||S.ds==='ims_sku_prev'||S.ds==='ims_sku_curr')?'ims':'off';
+      const d=DATA.sr[S.sr]||{};
+      const tTot=((d[pfx+'_otc']||[])[S.per]||0)+((d[pfx+'_iw']||[])[S.per]||0)+((d[pfx+'_test']||[])[S.per]||0);
+      const phGrn=(ph[pfx+'_grn']||{val:0}).val;
+      const scale=tTot>0?phGrn/tTot:0;
+      list=list.map(s=>({...s, m:s.m.map(v=>Math.round(v*scale))}));
+    }
+  }
+  const sc=SKU_DS_HEX[dsKey]||'#e59247';
+  const dsColor=SKU_DS_COLORS[dsKey]||'var(--sku-o)';
+  const dsLbl=SKU_DS_LABELS[dsKey]||'Offtake SKU Пот · УП';
   const n=5;
 
   const thM=MO.slice(0,n).map((m,i)=>{
@@ -742,8 +900,8 @@ function renderSKU(){
   document.getElementById('tab-sku').innerHTML=`
     <div style="margin-top:2px">
       <div class="sku-top">
-        <div class="fp ds-active" style="color:${dsColor};border-color:currentColor;font-size:11px;padding:4px 9px">
-          <span class="fp-dot" style="background:${dsColor}"></span>${dsLbl}<span class="fp-chev">▾</span>
+        <div style="display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid ${dsColor};border-radius:20px;font-size:11px;font-weight:600;color:${dsColor}">
+          <span style="width:7px;height:7px;border-radius:50%;background:${dsColor};flex-shrink:0"></span>${dsLbl}
         </div>
         <span class="sku-count">SKU: ${list.length}</span>
       </div>
@@ -778,9 +936,12 @@ function renderSKU(){
 function renderCategories(){
   const sm=getSum();
   const prevPer=S.per>0?PER_LIST[S.per-1]:null;
-  const isGrn=S.ds==='off_grn'||S.ds==='ims_grn';
+  // Категорії завжди показують ГРН-дані (авто-маппінг як у SKU tab)
+  const catIsIMS=S.ds==='ims_grn'||S.ds==='ims_sku_prev'||S.ds==='ims_sku_curr';
+  const catLbl=catIsIMS?'IMS ГРН · Категорії':'Offtake ГРН · Категорії';
+  const catColor=catIsIMS?'var(--ims)':'var(--off)';
   const total=sm.otc.c+sm.iw.c+sm.tst.c;
-  const unit=isGrn?'грн':'уп';
+  const unit='грн'; // завжди фінансові дані в категоріях
 
   const cats=[
     {key:'otc',lbl:'OTC', m:sm.monthly.otc},
@@ -804,9 +965,13 @@ function renderCategories(){
 
   document.getElementById('tab-categories').innerHTML=`
     <div style="margin-top:2px">
-      <div class="sec-t">КАТЕГОРІЇ</div>
+      <div class="sku-top" style="margin-bottom:10px">
+        <div style="display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid ${catColor};border-radius:20px;font-size:11px;font-weight:600;color:${catColor}">
+          <span style="width:7px;height:7px;border-radius:50%;background:${catColor};flex-shrink:0"></span>${catLbl}
+        </div>
+      </div>
       <div class="hero-row">${heroHTML}</div>
-      ${mkDonut(sm.otc.c,sm.iw.c,sm.tst.c,total,isGrn)}
+      ${mkDonut(sm.otc.c,sm.iw.c,sm.tst.c,total,true)}
       <div style="height:14px"></div>
     </div>
   `;
@@ -883,7 +1048,7 @@ document.getElementById('srBtn').addEventListener('click',()=>{
   }).join('');
   m.classList.add('open');
   m.querySelectorAll('.sr-opt').forEach(o=>{
-    o.addEventListener('click',()=>{ S.sr=o.dataset.sr; m.classList.remove('open'); render(); });
+    o.addEventListener('click',()=>{ S.sr=o.dataset.sr; S.pharmacy=null; m.classList.remove('open'); render(); });
   });
 });
 document.getElementById('srModal').addEventListener('click',e=>{
@@ -915,6 +1080,30 @@ function renderHeader(){
   document.getElementById('srNm').textContent=nm;
 }
 
+// ═══════════════════════════════════════════
+//  PHARMACY SELECTION (P5)
+// ═══════════════════════════════════════════
+// composite key — addr+nm унікальна пара (одна адреса може мати різні мережі)
+const phKey=o=>o.addr+'|'+o.nm;
+
+function selectPharmacy(key){
+  S.pharmacy = (S.pharmacy===key) ? null : key;
+  render();
+}
+
+// ═══════════════════════════════════════════
+//  PHARMACY BANNER (P9B)
+// ═══════════════════════════════════════════
+function renderBanner(){
+  const el=document.getElementById('ph-banner');
+  if(!S.pharmacy){ el.style.display='none'; el.innerHTML=''; return; }
+  const o=(DATA.pharmacies[S.sr]||[]).find(p=>phKey(p)===S.pharmacy);
+  if(!o){ el.style.display='none'; return; }
+  const esc=phKey(o).replace(/'/g,"\\'");
+  el.style.display='flex';
+  el.innerHTML=`<div class="ph-banner-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ph-banner-body"><div class="ph-banner-addr">${o.addr}</div><div class="ph-banner-meta">${o.nm}\u00A0·\u00A0${o.city}</div></div><button class="ph-banner-x" onclick="selectPharmacy('${esc}')">×</button>`;
+}
+
 function renderTab(){
   const t=S.tab;
   if(t==='overview')   renderOverview();
@@ -927,6 +1116,7 @@ function render(){
   renderHeader();
   renderFilterBar();
   renderCtx();
+  renderBanner();
   renderTab();
 }
 
