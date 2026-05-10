@@ -121,7 +121,7 @@ button{font-family:inherit;border:none;cursor:pointer}
 /* ════ PHARMACY TABLE ════ */
 .ph-search-wrap{position:relative;margin-bottom:8px}
 .ph-search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-.ph-inp{width:100%;padding:9px 12px 9px 33px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);color:var(--ink);font-family:inherit;font-size:14px;outline:none;transition:border-color .15s}
+.ph-inp{width:100%;padding:9px 12px 9px 33px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);color:var(--ink);font-family:inherit;font-size:16px;outline:none;transition:border-color .15s}
 .ph-inp:focus{border-color:var(--border-2)}
 .ph-inp::placeholder{color:var(--muted)}
 .ph-actions{display:flex;gap:6px;margin-bottom:10px}
@@ -160,7 +160,7 @@ button{font-family:inherit;border:none;cursor:pointer}
 .sku-sr{display:flex;gap:6px;margin-bottom:8px}
 .sku-s-wrap{flex:1;position:relative}
 .sku-s-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-.sku-inp{width:100%;padding:8px 12px 8px 33px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);color:var(--ink);font-family:inherit;font-size:14px;outline:none}
+.sku-inp{width:100%;padding:8px 12px 8px 33px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);color:var(--ink);font-family:inherit;font-size:16px;outline:none}
 .sku-inp::placeholder{color:var(--muted)}
 .sku-tw{overflow-x:auto;scrollbar-width:thin;border-radius:var(--rs);border:1px solid var(--border);margin-bottom:14px}
 .sku-tbl{border-collapse:collapse;font-size:12px;min-width:490px;width:100%}
@@ -520,27 +520,33 @@ function spark(vals,color,w=58,h=20){
 }
 function sumArr(arr,to){ return (arr||[]).slice(0,to+1).reduce((a,b)=>a+b,0); }
 
-// ─── pharmacy-level category sum (P5 data layer) ───
+// ─── module-level search (not in S → avoids input focus loss on re-render)
+let phSearch = '';
+
+// ─── derive unique city list for current SR
+function getCityList(){
+  const cities=[...new Set((DATA.pharmacies[S.sr]||[]).map(o=>o.city))].sort();
+  return [{id:'all',lbl:'Всі міста'},...cities.map(c=>({id:c,lbl:c}))];
+}
 // Derives OTC/IW/TEST breakdown from territory shape × pharmacy grn share × cat_split
 function getPharmacySum(ph){
   const pfx=(S.ds==='ims_grn'||S.ds==='ims_sku_prev'||S.ds==='ims_sku_curr')?'ims':'off';
   const d=DATA.sr[S.sr]||{};
   const ytd=S.agg==='ytd';
   const tOtc=d[pfx+'_otc']||[], tIw=d[pfx+'_iw']||[], tTst=d[pfx+'_test']||[];
-  // territory total per period
   const tTot=tOtc.map((v,i)=>v+tIw[i]+tTst[i]);
-  // pharmacy's grn share at current period (anchors the absolute level)
   const kpi=ph[pfx+'_grn']||{val:0,prev:0};
-  const base=tTot[S.per]||1;
-  const scale=kpi.val/base;
-  // category split: [otcPct, iwPct], testPct = remainder
+  const p=S.per;
+  // Two-scale anchor: kpi.val for current month, kpi.prev for previous month
+  // This ensures HERO card deltas reflect actual pharmacy growth, not territory pattern
+  const scaleCur  = kpi.val  / (tTot[p]   || 1);
+  const scalePrev = p>0 ? kpi.prev / (tTot[p-1] || 1) : scaleCur;
+  const sc=(i)=> i===p ? scaleCur : (i===p-1 ? scalePrev : scaleCur);
   const [op,ip]=ph.cat_split||[62,26];
   const tp=100-op-ip;
-  // derive monthly arrays: territory shape × scale × category %
-  const phOtc=tTot.map(v=>Math.round(v*scale*op/100));
-  const phIw =tTot.map(v=>Math.round(v*scale*ip/100));
-  const phTst=tTot.map(v=>Math.round(v*scale*tp/100));
-  const p=S.per;
+  const phOtc=tTot.map((v,i)=>Math.round(v*sc(i)*op/100));
+  const phIw =tTot.map((v,i)=>Math.round(v*sc(i)*ip/100));
+  const phTst=tTot.map((v,i)=>Math.round(v*sc(i)*tp/100));
   const val=(arr,i)=>ytd?sumArr(arr,i):(arr[i]||0);
   return {
     otc:{c:val(phOtc,p), p:p>0?val(phOtc,p-1):null},
@@ -632,7 +638,7 @@ function renderFilterBar(){
     ${mkPill('fpPer','',false,PER_LIST[S.per])}
     ${mkPill('fpAgg','',false,agg.lbl)}
     ${mkPill('fpMd','',false,md.lbl)}
-    ${mkPill('fpCity','',false,'Київ')}
+    ${mkPill('fpCity','',false, S.city==='all'?'Всі міста':S.city)}
   `;
 
   mkDd('fpDs', DS_LIST, 'ds', d=>d.lbl,
@@ -641,6 +647,7 @@ function renderFilterBar(){
   mkDd('fpPer', PER_LIST.map((l,i)=>({id:i,lbl:l})),'per',d=>d.lbl,null);
   mkDd('fpAgg', AGG_LIST, 'agg', a=>a.lbl, null);
   mkDd('fpMd',  MODE_LIST,'mode',m=>m.lbl,null);
+  mkDd('fpCity', getCityList(), 'city', c=>c.lbl, null);
 }
 
 // ═══════════════════════════════════════════
@@ -692,6 +699,7 @@ function renderOverview(){
 
   const outs=(DATA.pharmacies[S.sr]||[])
     .map(o=>({...o,...getPhKPI(o)}))
+    .filter(o=>S.city==='all'||o.city===S.city)
     .sort((a,b)=>b.val-a.val)
     .slice(0,5);
   const dsLblShort=(DS_LIST.find(d=>d.id===S.ds)?.lbl)||'';
@@ -786,14 +794,21 @@ function mkTrendChart(mon,per){
 // ═══════════════════════════════════════════
 //  PHARMACIES TAB
 // ═══════════════════════════════════════════
-function renderPharmacies(){
-  const raw=DATA.pharmacies[S.sr]||[];
-  const outs=raw.map(o=>({...o,...getPhKPI(o)})).sort((a,b)=>b.val-a.val);
-  const prevPer=S.per>0?PER_LIST[S.per-1]:null;
-  const dsLbl=(DS_LIST.find(d=>d.id===S.ds)?.lbl)||'Offtake ГРН';
+// ─── renders only the cards portion (called on search input + city change)
+function renderPharCards(){
+  let outs=(DATA.pharmacies[S.sr]||[]).map(o=>({...o,...getPhKPI(o)})).sort((a,b)=>b.val-a.val);
+  // city filter
+  if(S.city!=='all') outs=outs.filter(o=>o.city===S.city);
+  // search filter
+  const q=phSearch.toLowerCase().trim();
+  if(q) outs=outs.filter(o=>
+    o.addr.toLowerCase().includes(q)||
+    o.nm.toLowerCase().includes(q)||
+    o.city.toLowerCase().includes(q)
+  );
   const total=outs.reduce((s,o)=>s+o.val,0);
   const maxVal=outs.length?outs[0].val:1;
-
+  const prevPer=S.per>0?PER_LIST[S.per-1]:null;
   const cards=outs.map((o,i)=>{
     const share=total>0?(o.val/total*100).toFixed(1):'0.0';
     const barW=Math.round(o.val/maxVal*100);
@@ -818,7 +833,11 @@ function renderPharmacies(){
       </div>
     </div>`;
   }).join('');
+  const el=document.getElementById('ph-cards');
+  if(el) el.innerHTML=cards||`<div style="text-align:center;padding:32px 0;color:var(--muted);font-size:13px">Нічого не знайдено</div>`;
+}
 
+function renderPharmacies(){
   document.getElementById('tab-pharmacies').innerHTML=`
     <div style="margin-top:2px">
       <div class="ph-search-wrap">
@@ -835,31 +854,27 @@ function renderPharmacies(){
           Групи
         </button>
       </div>
-
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
-        ${cards}
-      </div>
-      <div class="pager">
-        <button class="pg-btn act">1</button>
-        <button class="pg-btn">2</button>
-        <button class="pg-btn">3</button>
-        <span class="pg-dots">…</span>
-        <button class="pg-btn">25</button>
-        <button class="pg-btn">›</button>
-      </div>
+      <div id="ph-cards" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px"></div>
       <div style="height:14px"></div>
     </div>
   `;
+  // restore search value + attach live-search listener
+  const inp=document.querySelector('.ph-inp');
+  if(inp){
+    inp.value=phSearch;
+    inp.addEventListener('input',e=>{ phSearch=e.target.value; renderPharCards(); });
+  }
+  renderPharCards();
 }
 
 // ═══════════════════════════════════════════
 //  SKU TAB
 // ═══════════════════════════════════════════
-function renderSKU(){
+let skuSearch = '';
+
+function getScaledSKUList(){
   const dsKey=getSKUDataset();
   let list=DATA[dsKey]||DATA.sku_off_curr;
-
-  // P5 data layer: scale SKU values by pharmacy's share when pharmacy is selected
   if(S.pharmacy){
     const ph=(DATA.pharmacies[S.sr]||[]).find(p=>phKey(p)===S.pharmacy);
     if(ph){
@@ -868,21 +883,20 @@ function renderSKU(){
       const tTot=((d[pfx+'_otc']||[])[S.per]||0)+((d[pfx+'_iw']||[])[S.per]||0)+((d[pfx+'_test']||[])[S.per]||0);
       const phGrn=(ph[pfx+'_grn']||{val:0}).val;
       const scale=tTot>0?phGrn/tTot:0;
-      list=list.map(s=>({...s, m:s.m.map(v=>Math.round(v*scale))}));
+      list=list.map(s=>({...s,m:s.m.map(v=>Math.round(v*scale))}));
     }
   }
+  return list;
+}
+
+function renderSKURows(){
+  const list=getScaledSKUList();
+  const q=skuSearch.toLowerCase().trim();
+  const filtered=q?list.filter(s=>s.nm.toLowerCase().includes(q)):list;
+  const dsKey=getSKUDataset();
   const sc=SKU_DS_HEX[dsKey]||'#e59247';
-  const dsColor=SKU_DS_COLORS[dsKey]||'var(--sku-o)';
-  const dsLbl=SKU_DS_LABELS[dsKey]||'Offtake SKU Пот · УП';
   const n=5;
-
-  const thM=MO.slice(0,n).map((m,i)=>{
-    const cur=i===S.per;
-    return `<th class="${cur?'curr-h':''}">${m}${cur?" '26":''}</th>`;
-  }).join('');
-  const prevPer=S.per>0?PER_LIST[S.per-1]:'—';
-
-  const rows=list.map((s,i)=>{
+  const rows=filtered.map((s,i)=>{
     const cv=s.m[S.per]||0, pv=S.per>0?s.m[S.per-1]:null;
     const mCells=MO.slice(0,n).map((_,mi)=>{
       const cur=mi===S.per;
@@ -896,6 +910,22 @@ function renderSKU(){
       <td>${spark(s.m,sc,50,18)}</td>
     </tr>`;
   }).join('');
+  const tbody=document.getElementById('sku-body');
+  if(tbody) tbody.innerHTML=rows||`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted)">Нічого не знайдено</td></tr>`;
+  const cnt=document.getElementById('sku-count');
+  if(cnt) cnt.textContent=q?`SKU: ${filtered.length} / ${list.length}`:`SKU: ${list.length}`;
+}
+
+function renderSKU(){
+  const dsKey=getSKUDataset();
+  const dsColor=SKU_DS_COLORS[dsKey]||'var(--sku-o)';
+  const dsLbl=SKU_DS_LABELS[dsKey]||'Offtake SKU Пот · УП';
+  const n=5;
+  const thM=MO.slice(0,n).map((m,i)=>{
+    const cur=i===S.per;
+    return `<th class="${cur?'curr-h':''}">${m}${cur?" '26":''}</th>`;
+  }).join('');
+  const prevPer=S.per>0?PER_LIST[S.per-1]:'—';
 
   document.getElementById('tab-sku').innerHTML=`
     <div style="margin-top:2px">
@@ -903,7 +933,7 @@ function renderSKU(){
         <div style="display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid ${dsColor};border-radius:20px;font-size:11px;font-weight:600;color:${dsColor}">
           <span style="width:7px;height:7px;border-radius:50%;background:${dsColor};flex-shrink:0"></span>${dsLbl}
         </div>
-        <span class="sku-count">SKU: ${list.length}</span>
+        <span id="sku-count" class="sku-count"></span>
       </div>
       <div class="sku-sr">
         <div class="sku-s-wrap">
@@ -914,20 +944,22 @@ function renderSKU(){
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>
           Фільтри
         </button>
-        <button class="ph-btn">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Експорт
-        </button>
       </div>
       <div class="sku-tw">
         <table class="sku-tbl">
           <thead><tr><th>#</th><th>SKU</th>${thM}<th>vs ${prevPer}</th><th>Тренд</th></tr></thead>
-          <tbody>${rows}</tbody>
+          <tbody id="sku-body"></tbody>
         </table>
       </div>
       <div style="height:14px"></div>
     </div>
   `;
+  const inp=document.querySelector('.sku-inp');
+  if(inp){
+    inp.value=skuSearch;
+    inp.addEventListener('input',e=>{ skuSearch=e.target.value; renderSKURows(); });
+  }
+  renderSKURows();
 }
 
 // ═══════════════════════════════════════════
@@ -1048,7 +1080,7 @@ document.getElementById('srBtn').addEventListener('click',()=>{
   }).join('');
   m.classList.add('open');
   m.querySelectorAll('.sr-opt').forEach(o=>{
-    o.addEventListener('click',()=>{ S.sr=o.dataset.sr; S.pharmacy=null; m.classList.remove('open'); render(); });
+    o.addEventListener('click',()=>{ S.sr=o.dataset.sr; S.pharmacy=null; S.city='all'; phSearch=''; skuSearch=''; m.classList.remove('open'); render(); });
   });
 });
 document.getElementById('srModal').addEventListener('click',e=>{
