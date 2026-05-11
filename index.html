@@ -1397,20 +1397,22 @@ function resetSkuFilter(){ skuSelected=null; renderSKURows(); openSkuSheet(); }
 function skuSelectAll(){ skuSelected=null; openSkuSheet(); renderSKURows(); }
 function skuDeselectAll(){ skuSelected=new Set(); openSkuSheet(); renderSKURows(); }
 
-// ── Swipe to close (Batch6) ──
-// Закривається ТІЛЬКИ якщо box.scrollTop===0 при початку свайпу
-// → коли лист прокручений — свайп вгору не закриває sheet
+// ── Swipe to close (Batch6b) ──
+// Grip зона (.sh-grip-w): завжди закриває при dy>40 (iOS-паттерн)
+// Контент зона: закриває лише якщо scrollTop===0 && dy>64
 function addSwipeClose(bgId, closeFn){
   const box=document.querySelector('#'+bgId+' .sh-box');
   if(!box) return;
-  let startY=0, startScroll=0;
+  let startY=0, startScroll=0, gripTouch=false;
   box.addEventListener('touchstart',e=>{
     startY=e.touches[0].clientY;
     startScroll=box.scrollTop;
+    gripTouch=!!e.target.closest('.sh-grip-w');
   },{passive:true});
   box.addEventListener('touchend',e=>{
     const dy=e.changedTouches[0].clientY-startY;
-    if(startScroll===0 && dy>64) closeFn();
+    if(gripTouch && dy>40) closeFn();
+    else if(startScroll===0 && dy>64) closeFn();
   },{passive:true});
 }
 </script>
