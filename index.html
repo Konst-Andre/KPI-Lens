@@ -1397,14 +1397,20 @@ function resetSkuFilter(){ skuSelected=null; renderSKURows(); openSkuSheet(); }
 function skuSelectAll(){ skuSelected=null; openSkuSheet(); renderSKURows(); }
 function skuDeselectAll(){ skuSelected=new Set(); openSkuSheet(); renderSKURows(); }
 
-// ── Swipe to close (Batch5b) ──
+// ── Swipe to close (Batch6) ──
+// Закривається ТІЛЬКИ якщо box.scrollTop===0 при початку свайпу
+// → коли лист прокручений — свайп вгору не закриває sheet
 function addSwipeClose(bgId, closeFn){
   const box=document.querySelector('#'+bgId+' .sh-box');
   if(!box) return;
-  let startY=0;
-  box.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;},{passive:true});
+  let startY=0, startScroll=0;
+  box.addEventListener('touchstart',e=>{
+    startY=e.touches[0].clientY;
+    startScroll=box.scrollTop;
+  },{passive:true});
   box.addEventListener('touchend',e=>{
-    if(e.changedTouches[0].clientY-startY>64) closeFn();
+    const dy=e.changedTouches[0].clientY-startY;
+    if(startScroll===0 && dy>64) closeFn();
   },{passive:true});
 }
 </script>
