@@ -1,3 +1,5 @@
+> живе доки: наступне самері KPI Lens (тоді — у `archive/summaries/`). Перенесено з ПК Konst 04.10.2026 (ревізія ядра, переїзд продуктів); текст нижче — без змін, епоха claude.ai Project.
+
 # KPI Lens — Session Summary — Batch 15.2
 
 ## Що зроблено
